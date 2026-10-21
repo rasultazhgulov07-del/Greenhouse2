@@ -1,0 +1,34 @@
+@startuml
+skinparam classAttributeIconSize 0
+class GreenhouseData
+interface IrrigationStrategy { +waterLiters(data): int }
+class FixedIrrigation
+class MoistureIrrigation
+class WeatherIrrigation
+class IrrigationContext { -strategy: IrrigationStrategy
++setStrategy(strategy)
++execute(data): int }
+class IrrigationSelector { +select(data): IrrigationStrategy }
+interface WeatherSource { +isSunny(): boolean }
+class SimulatedWeatherSource
+IrrigationStrategy <|.. FixedIrrigation
+IrrigationStrategy <|.. MoistureIrrigation
+IrrigationStrategy <|.. WeatherIrrigation
+IrrigationContext --> IrrigationStrategy
+IrrigationSelector ..> IrrigationStrategy
+WeatherIrrigation --> WeatherSource
+WeatherSource <|.. SimulatedWeatherSource
+interface VentilationStrategy { +fanPercent(data): int }
+class TemperatureVentilation
+class HumidityVentilation
+class EcoVentilation
+class VentilationContext { -strategy: VentilationStrategy
++setStrategy(strategy)
++execute(data): int }
+class VentilationSelector { +select(data): VentilationStrategy }
+VentilationStrategy <|.. TemperatureVentilation
+VentilationStrategy <|.. HumidityVentilation
+VentilationStrategy <|.. EcoVentilation
+VentilationContext --> VentilationStrategy
+VentilationSelector ..> VentilationStrategy
+@enduml
